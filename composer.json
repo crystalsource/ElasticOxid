@@ -1,0 +1,35 @@
+{
+  "name"       : "crystalsource/ElasticOxid",
+  "description": "Elasticsearch implementation in oxid eshop",
+  "keywords"   : [
+    "ecommerce",
+    "oxid eshop",
+    "elasticsearch"
+  ],
+  "type"       : "library",
+  "license"    : "GPL-3.0",
+  "authors"    : [
+    {
+      "name"    : "Mike Bertram",
+      "email"   : "contact@crystalsource.de",
+      "homepage": "http://crystalsource.de"
+    }
+  ],
+  "require"    : {
+    "ruflin/elastica": "1.4.3.0"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0"
+  },
+  "autoload"   : {
+    "psr-0": {
+      "tests": "tests/"
+    },
+    "psr-4": {
+      "CrystalSource\\ElasticOxid\\": "src/"
+    }
+  },
+  "bin"        : [
+    "bin/elasticoxid-setup"
+  ]
+}

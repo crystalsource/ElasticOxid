@@ -1,0 +1,7 @@
+suites:
+  sdkommerce:
+    namespace: CrystalSource\ElasticOxid
+    psr4_prefix: CrystalSource
+    spec_prefix:
+    src_path: %paths.config%/src
+    spec_path: %paths.config%/tests
