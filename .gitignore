@@ -1,0 +1,11 @@
+# Composer
+/bin
+/vendor
+/composer.phar
+/composer.lock
+
+# IDE
+/.idea
+
+# phpSpec
+/.phpspec
