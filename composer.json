@@ -26,10 +26,7 @@
       "tests": "tests/"
     },
     "psr-4": {
-      "CrystalSource\\ElasticOxid\\": "src/"
+      "ElasticOxid\\": "src/"
     }
-  },
-  "bin"        : [
-    "bin/elasticoxid-setup"
-  ]
+  }
 }
