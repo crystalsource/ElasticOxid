@@ -1,0 +1,5 @@
+services:
+    oxid.object.oxcontent:
+        class: ElasticOxid\Type\Content
+    oxid.object.oxarticle:
+        class: ElasticOxid\Type\Article
