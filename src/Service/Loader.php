@@ -16,14 +16,17 @@ namespace ElasticOxid\Service;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Loader extends ContainerBuilder
 {
     /**
      * Loader constructor.
+     * @param ParameterBagInterface|null $parameterBag
      */
-    public function __construct()
+    public function __construct(ParameterBagInterface $parameterBag = null)
     {
+        $this->parameterBag = $parameterBag ?: new ParameterBag();
         $this->loadYamlFile(__DIR__ . '/Services.yaml');
     }
 
