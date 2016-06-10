@@ -19,6 +19,7 @@ class elasticoxid
     {
         if ($this->elasticOxidLoader === null) {
             $this->elasticOxidLoader = $this->getNewElasticOxidLoader();
+            $this->elasticOxidLoader->get('elasticoxid.connector')->setConfig($this->getElasticOxidConfig());
         }
         return $this->elasticOxidLoader;
     }
@@ -37,19 +38,25 @@ class elasticoxid
     protected function getElasticOxidConfig()
     {
         $config = [
-            'host'            => oxRegistry::getConfig()->getConfigParam('sElasticOxidHost'),
-            'port'            => oxRegistry::getConfig()->getConfigParam('sElasticOxidPort'),
-            'path'            => oxRegistry::getConfig()->getConfigParam('sElasticOxidPath'),
-            'url'             => oxRegistry::getConfig()->getConfigParam('sElasticOxidUrl'),
-            'proxy'           => oxRegistry::getConfig()->getConfigParam('sElasticOxidProxy'),
-            'transport'       => oxRegistry::getConfig()->getConfigParam('sElasticOxidTransport'),
-            'persistent'      => oxRegistry::getConfig()->getConfigParam('sElasticOxidPersistent'),
-            'timeout'         => oxRegistry::getConfig()->getConfigParam('sElasticOxidTimeout'),
-            'connections'     => oxRegistry::getConfig()->getConfigParam('sElasticOxidConnection'),
-            'roundRobin'      => oxRegistry::getConfig()->getConfigParam('sElasticOxidRoundRobin'),
-            'log'             => oxRegistry::getConfig()->getConfigParam('sElasticOxidLog'),
-            'retryOnConflict' => oxRegistry::getConfig()->getConfigParam('sElasticOxidRetryOnConflict')
+            'host'            => $this->getConfigParamOrNull('sElasticOxidHost'),
+            'port'            => $this->getConfigParamOrNull('sElasticOxidPort'),
+            'path'            => $this->getConfigParamOrNull('sElasticOxidPath'),
+            'url'             => $this->getConfigParamOrNull('sElasticOxidUrl'),
+            'proxy'           => $this->getConfigParamOrNull('sElasticOxidProxy'),
+            'transport'       => $this->getConfigParamOrNull('sElasticOxidTransport'),
+            'persistent'      => $this->getConfigParamOrNull('sElasticOxidPersistent'),
+            'timeout'         => $this->getConfigParamOrNull('sElasticOxidTimeout'),
+            'roundRobin'      => $this->getConfigParamOrNull('sElasticOxidRoundRobin'),
+            'log'             => $this->getConfigParamOrNull('sElasticOxidLog'),
+            'retryOnConflict' => $this->getConfigParamOrNull('sElasticOxidRetryOnConflict')
         ];
         return $config;
+    }
+
+    protected function getConfigParamOrNull($configName)
+    {
+        return oxRegistry::getConfig()->getConfigParam($configName) ? oxRegistry::getConfig()->getConfigParam(
+            'sElasticOxidHost'
+        ) : null;
     }
 }
