@@ -16,26 +16,26 @@ namespace ElasticOxid\Type;
 interface Type
 {
     /**
-     * @param oxBase $oxObject
+     * @param \oxBase $oxObject
      * @param $ident
      */
-    public function loadOne(oxBase $oxObject, $ident);
+    public function loadOne(\oxBase $oxObject, $ident);
 
     /**
-     * @param oxBase $oxObject
+     * @param \oxBase $oxObject
      * @param array $match
      */
-    public function loadOneFromMatch(oxBase $oxObject, $match = []);
+    public function loadOneFromMatch(\oxBase $oxObject, $match = []);
 
     /**
-     * @param oxList $oxList
+     * @param \oxList $oxList
      * @param array $query
      * @param array $sort
      * @param null $size
      * @param null $from
      * @return mixed
      */
-    public function loadList(oxList $oxList, $query = [], $sort = [], $size = null, $from = null);
+    public function loadList(\oxList $oxList, $query = [], $sort = [], $size = null, $from = null);
 
     /**
      * @return array

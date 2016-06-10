@@ -46,22 +46,22 @@ class DefaultType implements Type
     protected $data = [];
 
     /**
-     * @param oxBase $oxObject
+     * @param \oxBase $oxObject
      * @param $ident
      * @param array $query
      * @return mixed
      */
-    public function loadOne(oxBase $oxObject, $ident)
+    public function loadOne(\oxBase $oxObject, $ident)
     {
         return $this->loadOneFromMatch($oxObject, [ 'id' => $ident ]);
     }
 
     /**
-     * @param oxBase $oxObject
+     * @param \oxBase $oxObject
      * @param array $match
      * @return mixed
      */
-    public function loadOneFromMatch(oxBase $oxObject, $match = [])
+    public function loadOneFromMatch(\oxBase $oxObject, $match = [])
     {
         $elasticResponse = $this->connector->match($this->index, $this->type, $match);
 
@@ -85,7 +85,7 @@ class DefaultType implements Type
      * @param null $from
      * @return mixed
      */
-    public function loadList(oxList $oxList, $query = [], $sort = [], $size = null, $from = null)
+    public function loadList(\oxList $oxList, $query = [], $sort = [], $size = null, $from = null)
     {
         // TODO: Implement loadList() method.
     }
