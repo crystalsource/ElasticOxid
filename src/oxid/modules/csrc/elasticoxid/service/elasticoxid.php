@@ -55,8 +55,8 @@ class elasticoxid
 
     protected function getConfigParamOrNull($configName)
     {
-        return oxRegistry::getConfig()->getConfigParam($configName) ? oxRegistry::getConfig()->getConfigParam(
-            'sElasticOxidHost'
-        ) : null;
+        return oxRegistry::getConfig()->getConfigParam($configName)
+            ? oxRegistry::getConfig()->getConfigParam($configName)
+            : null;
     }
 }
