@@ -56,7 +56,7 @@ class Connector implements ConnectorInterface
      */
     public function persist($index, $type, array $data)
     {
-        $elasticIndex = $this->client->getIndex($index);
+        $elasticIndex = $this->getClient()->getIndex($index);
         $elasticType = $elasticIndex->getType($type);
         $elasticId = $data['id'];
 
@@ -104,7 +104,7 @@ class Connector implements ConnectorInterface
      */
     public function sendRequest($path, $type, $query)
     {
-        return $this->client->request($path, $type, $query);
+        return $this->getClient()->request($path, $type, $query);
     }
 
     /**
@@ -140,7 +140,7 @@ class Connector implements ConnectorInterface
      */
     private function executeSearchQuery($index, $type, $query)
     {
-        $elasticIndex = $this->client->getIndex($index);
+        $elasticIndex = $this->getClient()->getIndex($index);
         $elasticType = $elasticIndex->getType($type);
 
         $path = $elasticIndex->getName() . '/' . $elasticType->getName() . '/_search';
