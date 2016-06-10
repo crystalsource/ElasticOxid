@@ -3,6 +3,6 @@ services:
         class: ElasticOxid\Connector\Connector
     elasticoxid.oxid.object.oxcontent:
         class: ElasticOxid\Type\Content
-        arguments: [@elasticoxid.connector]
+        arguments: ['@elasticoxid.connector']
     elasticoxid.oxid.object.oxarticle:
         class: ElasticOxid\Type\Article
