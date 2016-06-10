@@ -1,5 +1,8 @@
 services:
-    oxid.object.oxcontent:
+    elasticoxid.connector:
+        class: ElasticOxid\Connector\Connector
+    elasticoxid.oxid.object.oxcontent:
         class: ElasticOxid\Type\Content
-    oxid.object.oxarticle:
+        arguments: [@elasticoxid.connector]
+    elasticoxid.oxid.object.oxarticle:
         class: ElasticOxid\Type\Article

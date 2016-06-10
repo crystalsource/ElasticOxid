@@ -18,9 +18,14 @@ interface Type
     /**
      * @param oxBase $oxObject
      * @param $ident
-     * @param array $query
      */
-    public function loadOne(oxBase $oxObject, $ident, $query = []);
+    public function loadOne(oxBase $oxObject, $ident);
+
+    /**
+     * @param oxBase $oxObject
+     * @param array $match
+     */
+    public function loadOneFromMatch(oxBase $oxObject, $match = []);
 
     /**
      * @param oxList $oxList

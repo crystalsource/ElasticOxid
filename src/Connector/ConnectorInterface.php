@@ -19,6 +19,11 @@ use Elastica\Response;
 interface ConnectorInterface
 {
     /**
+     * @param array $config
+     */
+    public function setConfig($config);
+
+    /**
      * @return Client
      */
     public function getClient();

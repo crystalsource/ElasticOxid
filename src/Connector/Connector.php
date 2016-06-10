@@ -28,13 +28,12 @@ class Connector implements ConnectorInterface
     /**
      * @var array
      */
-    private $config;
-
+    private $config = [];
+    
     /**
-     * Connector constructor.
      * @param array $config
      */
-    public function __construct($config)
+    public function setConfig($config)
     {
         $this->config = $config;
     }

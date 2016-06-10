@@ -31,9 +31,27 @@ $aModule = array(
     'author'      => 'CrystalSource',
     'url'         => 'http://www.crystalsource.de',
     'email'       => 'contact@crystalsource.php',
-    'extend'      => array(),
-    'files'       => array(),
+    'extend'      => array(
+        'oxcontent' => 'csrc/elasticoxid/models/csrc_elasticoxid_oxcontent'
+    ),
+    'files'       => array(
+        'elasticoxid' => 'csrc/elasticoxid/service/elasticoxid.php'
+    ),
     'blocks' => array(),
-    'settings' => array(),
+    'settings' => array(
+        array('group' => 'main', 'name' => 'sElasticOxidHost', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidPort', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidPath', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidUrl', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidProxy', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidTransport', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidPersistent', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidTimeout', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidConnection', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidRoundRobin', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidLog', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'main', 'name' => 'sElasticOxidRetryOnConflict', 'type' => 'str', 'value' => 'localhost'),
+        array('group' => 'systems', 'name' => 'bElasticOxidContent', 'type' => 'bool', 'value' => '1')
+    ),
     'events' => array(),
 );

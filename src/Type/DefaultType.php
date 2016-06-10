@@ -49,10 +49,32 @@ class DefaultType implements Type
      * @param oxBase $oxObject
      * @param $ident
      * @param array $query
+     * @return mixed
      */
-    public function loadOne(oxBase $oxObject, $ident, $query = [])
+    public function loadOne(oxBase $oxObject, $ident)
     {
-        // TODO: Implement loadOne() method.
+        return $this->loadOneFromMatch($oxObject, [ 'id' => $ident ]);
+    }
+
+    /**
+     * @param oxBase $oxObject
+     * @param array $match
+     * @return mixed
+     */
+    public function loadOneFromMatch(oxBase $oxObject, $match = [])
+    {
+        $elasticResponse = $this->connector->match($this->index, $this->type, $match);
+
+        $elasticResponseArray = $elasticResponse->getData();
+        if ($elasticResponseArray['hits']['total'] < 1) {
+            return false;
+        }
+
+        $objectFields = $elasticResponseArray['hits']['hits'][0]['_source'];
+        foreach ($this->getMapping() as $field => $target) {
+            $oxObject->{$target} = new \oxField($objectFields[$field]);
+        }
+        return $objectFields['id'];
     }
 
     /**
