@@ -51,6 +51,11 @@ interface Type
      * @param array $data
      */
     public function setData(array $data);
+
+    /**
+     * @param \oxBase $oxObject
+     */
+    public function setDataFromObject(\oxBase $oxObject);
     
     public function persist();
 }

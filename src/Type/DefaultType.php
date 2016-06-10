@@ -46,6 +46,14 @@ class DefaultType implements Type
     protected $data = [];
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->data['id'];
+    }
+
+    /**
      * @param \oxBase $oxObject
      * @param $ident
      * @param array $query
@@ -112,6 +120,16 @@ class DefaultType implements Type
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     */
+    public function setDataFromObject(\oxBase $oxObject)
+    {
+        foreach ($this->getMapping() as $field => $source) {
+            $this->data[$field] = $oxObject->{$source}->getValue();
+        }
     }
 
     /**
