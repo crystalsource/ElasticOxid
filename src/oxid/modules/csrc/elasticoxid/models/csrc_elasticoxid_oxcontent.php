@@ -17,14 +17,28 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
         return parent::loadByIdent($sLoadId);
     }
 
+    public function loadInLang($iLanguage, $sOxid)
+    {
+        if ($this->isActiveForContent()) {
+            $this->setLanguage($iLanguage);
+            return $this->esLoad($sOxid);
+        }
+        return parent::loadByIdent($sLoadId);
+    }
+
     /**
      * @param $sLoadId
      * @return mixed
      */
     public function esLoadByIdent($sLoadId)
     {
-        $elasticOxidContent = $this->getElasticOxidContent();
-        return $elasticOxidContent->loadOne($this, $sLoadId);
+        try {
+            $elasticOxidContent = $this->getElasticOxidContent();
+            return $elasticOxidContent->loadOne($this, $sLoadId);
+        } catch (Exception $e) {
+            oxRegistry::getUtils()->writeToLog($e->getMessage(), 'elasticoxid.txt');
+            return $this->loadByIdent($sLoadId);
+        }
     }
 
     /**

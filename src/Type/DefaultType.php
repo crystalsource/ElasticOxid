@@ -46,6 +46,16 @@ class DefaultType implements Type
     protected $data = [];
 
     /**
+     * @var bool
+     */
+    protected $multiLang = false;
+
+    /**
+     * @var int
+     */
+    protected $language = 0;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -54,24 +64,34 @@ class DefaultType implements Type
     }
 
     /**
-     * @param \oxBase $oxObject
-     * @param $ident
-     * @param array $query
-     * @return mixed
+     * @return string
      */
-    public function loadOne(\oxBase $oxObject, $ident)
+    public function getType()
     {
-        return $this->loadOneFromMatch($oxObject, [ 'id' => $ident ]);
+        return $this->type . ($this->multiLang ? '_' . $this->language : '' );
     }
 
     /**
      * @param \oxBase $oxObject
-     * @param array $match
-     * @return mixed
+     * @param $ident
+     * @param int $lang
+     * @return bool
      */
-    public function loadOneFromMatch(\oxBase $oxObject, $match = [])
+    public function loadOne(\oxBase $oxObject, $ident, $lang = 0)
     {
-        $elasticResponse = $this->connector->match($this->index, $this->type, $match);
+        return $this->loadOneFromMatch($oxObject, $lang, [ 'id' => $ident ]);
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     * @param int $lang
+     * @param array $match
+     * @return bool
+     */
+    public function loadOneFromMatch(\oxBase $oxObject, $lang = 0, $match = [])
+    {
+        $this->setLanguage($lang);
+        $elasticResponse = $this->connector->match($this->index, $this->getType(), $match);
 
         $elasticResponseArray = $elasticResponse->getData();
         if ($elasticResponseArray['hits']['total'] < 1) {
@@ -86,14 +106,14 @@ class DefaultType implements Type
     }
 
     /**
-     * @param oxList $oxList
+     * @param \oxList $oxList
      * @param array $query
+     * @param int $lang
      * @param array $sort
      * @param null $size
      * @param null $from
-     * @return mixed
      */
-    public function loadList(\oxList $oxList, $query = [], $sort = [], $size = null, $from = null)
+    public function loadList(\oxList $oxList, $query = [], $lang = 0, $sort = [], $size = null, $from = null)
     {
         // TODO: Implement loadList() method.
     }
@@ -120,6 +140,22 @@ class DefaultType implements Type
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param int $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
     }
 
     /**

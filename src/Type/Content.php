@@ -28,6 +28,11 @@ class Content extends DefaultType
     protected $type = 'oxcontent';
 
     /**
+     * @var bool
+     */
+    protected $multiLang = true;
+
+    /**
      * @var array
      */
     protected $mapping = [

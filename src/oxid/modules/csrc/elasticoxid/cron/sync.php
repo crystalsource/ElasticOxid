@@ -39,6 +39,9 @@ class elasticOxidSync
     {
         $service = \oxRegistry::get('elasticoxid')->get($serviceClass);
         $oxObject = \oxNew($oxClass);
+
+        var_dump($this->getLanguages());
+
         $oxList = new \oxList();
         $oxList->init($oxClass);
         $oxList->selectString('SELECT * FROM ' . $oxObject->getViewName());
@@ -66,6 +69,44 @@ class elasticOxidSync
     private function isClient()
     {
         return (php_sapi_name() == 'cli');
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getLanguages()
+    {
+        $aLangData['params'] = oxRegistry::getConfig()->getConfigParam('aLanguageParams');
+        $aLangData['lang'] = oxRegistry::getConfig()->getConfigParam('aLanguages');
+        $aLangData['urls'] = oxRegistry::getConfig()->getConfigParam('aLanguageURLs');
+        $aLangData['sslUrls'] = oxRegistry::getConfig()->getConfigParam('aLanguageSSLURLs');
+
+        // empty languages parameters array - creating new one with default values
+        if (!is_array($aLangData['params'])) {
+            $aLangData['params'] = $this->assignDefaultLangParams($aLangData['lang']);
+        }
+
+        return $aLangData;
+    }
+
+    /**
+     * @param $aLanguages
+     * @return array
+     */
+    private function assignDefaultLangParams($aLanguages)
+    {
+        $aParams = array();
+        $iBaseId = 0;
+
+        foreach (array_keys($aLanguages) as $sOxId) {
+            $aParams[$sOxId]['baseId'] = $iBaseId;
+            $aParams[$sOxId]['active'] = 1;
+            $aParams[$sOxId]['sort'] = $iBaseId + 1;
+
+            $iBaseId++;
+        }
+
+        return $aParams;
     }
 }
 

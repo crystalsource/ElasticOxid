@@ -18,24 +18,29 @@ interface Type
     /**
      * @param \oxBase $oxObject
      * @param $ident
+     * @param int $lang
+     * @return mixed
      */
-    public function loadOne(\oxBase $oxObject, $ident);
+    public function loadOne(\oxBase $oxObject, $ident, $lang = 0);
 
     /**
      * @param \oxBase $oxObject
+     * @param int $lang
      * @param array $match
+     * @return mixed
      */
-    public function loadOneFromMatch(\oxBase $oxObject, $match = []);
+    public function loadOneFromMatch(\oxBase $oxObject, $lang = 0, $match = []);
 
     /**
      * @param \oxList $oxList
      * @param array $query
+     * @param int $lang
      * @param array $sort
      * @param null $size
      * @param null $from
      * @return mixed
      */
-    public function loadList(\oxList $oxList, $query = [], $sort = [], $size = null, $from = null);
+    public function loadList(\oxList $oxList, $query = [], $lang = 0, $sort = [], $size = null, $from = null);
 
     /**
      * @return array
@@ -56,6 +61,8 @@ interface Type
      * @param \oxBase $oxObject
      */
     public function setDataFromObject(\oxBase $oxObject);
+
+    public function getType();
     
     public function persist();
 }
