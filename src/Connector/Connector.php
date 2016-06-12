@@ -86,7 +86,7 @@ class Connector implements ConnectorInterface
      * @param array $match
      * @return Response
      */
-    public function match($index, $type, $match = [], $source = [], $size = -1, $from = 0)
+    public function match($index, $type, $match = [], $source = [], $size = null, $from = null)
     {
         $customQuery = [
             'match' => $match
