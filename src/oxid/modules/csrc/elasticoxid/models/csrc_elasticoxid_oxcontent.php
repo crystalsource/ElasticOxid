@@ -51,7 +51,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
     {
         try {
             if ($lang === null) {
-                $lang = oxRegistry::getLang()->getBaseLangugae();
+                $lang = oxRegistry::getLang()->getBaseLanguage();
             }
             $elasticOxidContent = $this->getElasticOxidContent();
             return $elasticOxidContent->loadOne($this, $sOxid, $lang);
@@ -69,7 +69,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
     {
         try {
             if ($lang === null) {
-                $lang = oxRegistry::getLang()->getBaseLangugae();
+                $lang = oxRegistry::getLang()->getBaseLanguage();
             }
             $elasticOxidContent = $this->getElasticOxidContent();
             return $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
