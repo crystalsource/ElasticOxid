@@ -172,7 +172,7 @@ class DefaultType implements Type
     public function setDataFromObject(\oxBase $oxObject)
     {
         foreach ($this->getMapping() as $field => $source) {
-            $this->data[$field] = $oxObject->{$source}->getValue();
+            $this->data[$field] = $oxObject->{$source}->getRawValue();
         }
     }
 

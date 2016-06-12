@@ -42,10 +42,13 @@ class elasticOxidSync
 
         if ($service->isMultiLang()) {
             foreach ($this->getLanguages() as $lang) {
-                oxRegistry::getLang()->setBaseLanguage($lang);
-                $service->setLanguage($lang);
-                $oxObject->setLanguage($lang);
-                $this->printLine(" -> Expert Lang " . $lang);
+                if (!$lang['active']) {
+                    continue;
+                }
+                oxRegistry::getLang()->setBaseLanguage($lang['baseId']);
+                $service->setLanguage($lang['baseId']);
+                $oxObject->setLanguage($lang['baseId']);
+                $this->printLine(" -> Expert Lang " . $lang['baseId']);
 
                 $this->syncOxObject($oxClass, $oxObject, $service);
             }
