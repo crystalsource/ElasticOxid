@@ -92,7 +92,7 @@ class DefaultType implements Type
             if ($field == 'id') {
                 $oxObject->setId($objectFields[$field]);
             }
-            $oxObject->{$target} = new \oxField($objectFields[$field]);
+            $oxObject->{$target} = new \oxField($objectFields[$field], \oxField::T_RAW);
         }
         return $objectFields['id'];
     }
