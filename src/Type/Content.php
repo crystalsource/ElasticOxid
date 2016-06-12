@@ -38,6 +38,7 @@ class Content extends DefaultType
     protected $mapping = [
         'id'        => 'oxcontents__oxid',
         'loadident' => 'oxcontents__oxloadid',
+        'active'    => 'oxcontents__oxactive',
         'shopid'    => 'oxcontents__oxshopid',
         'position'  => 'oxcontents__oxposition',
         'title'     => 'oxcontents__oxtitle',
