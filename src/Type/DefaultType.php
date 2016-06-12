@@ -73,19 +73,8 @@ class DefaultType implements Type
 
     /**
      * @param \oxBase $oxObject
-     * @param $ident
-     * @param int $lang
-     * @return bool
-     */
-    public function loadOne(\oxBase $oxObject, $ident, $lang = 0)
-    {
-        return $this->loadOneFromMatch($oxObject, $lang, [ 'id' => $ident ]);
-    }
-
-    /**
-     * @param \oxBase $oxObject
-     * @param int $lang
      * @param array $match
+     * @param int $lang
      * @return bool
      */
     public function loadOneFromMatch(\oxBase $oxObject, $match = [], $lang = 0)
@@ -103,6 +92,17 @@ class DefaultType implements Type
             $oxObject->{$target} = new \oxField($objectFields[$field]);
         }
         return $objectFields['id'];
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     * @param $ident
+     * @param int $lang
+     * @return bool
+     */
+    public function loadOne(\oxBase $oxObject, $ident, $lang = 0)
+    {
+        return $this->loadOneFromMatch($oxObject, [ 'id' => $ident ], $lang);
     }
 
     /**
