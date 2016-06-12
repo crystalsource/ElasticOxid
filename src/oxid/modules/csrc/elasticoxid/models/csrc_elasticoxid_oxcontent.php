@@ -49,16 +49,11 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
      */
     public function esLoad($sOxid, $lang = null)
     {
-        try {
-            if ($lang === null) {
-                $lang = oxRegistry::getLang()->getBaseLanguage();
-            }
-            $elasticOxidContent = $this->getElasticOxidContent();
-            return $elasticOxidContent->loadOne($this, $sOxid, $lang);
-        } catch (Exception $e) {
-            oxRegistry::getUtils()->writeToLog($e->getMessage() . PHP_EOL . PHP_EOL, 'elasticoxid.txt');
-            return parent::loadByIdent($sOxid);
+        if ($lang === null) {
+            $lang = oxRegistry::getLang()->getBaseLanguage();
         }
+        $elasticOxidContent = $this->getElasticOxidContent();
+        return $elasticOxidContent->loadOne($this, $sOxid, $lang);
     }
 
     /**
@@ -67,16 +62,11 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
      */
     public function esLoadByIdent($sLoadId, $lang = null)
     {
-        try {
-            if ($lang === null) {
-                $lang = oxRegistry::getLang()->getBaseLanguage();
-            }
-            $elasticOxidContent = $this->getElasticOxidContent();
-            return $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
-        } catch (Exception $e) {
-            oxRegistry::getUtils()->writeToLog($e->getMessage() . PHP_EOL . PHP_EOL, 'elasticoxid.txt');
-            return parent::loadByIdent($sLoadId);
+        if ($lang === null) {
+            $lang = oxRegistry::getLang()->getBaseLanguage();
         }
+        $elasticOxidContent = $this->getElasticOxidContent();
+        return $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
     }
 
     /**
