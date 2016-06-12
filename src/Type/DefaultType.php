@@ -89,10 +89,8 @@ class DefaultType implements Type
 
         $objectFields = $elasticResponseArray['hits']['hits'][0]['_source'];
         foreach ($this->getMapping() as $field => $target) {
-            if ($field == 'id') {
-                $oxObject->setId($objectFields[$field]);
-            }
-            $oxObject->{$target} = new \oxField($objectFields[$field], \oxField::T_RAW);
+            $value = $objectFields[$field];
+            $this->fillObjectField($oxObject, $field, $target, $value);
         }
         return $objectFields['id'];
     }
@@ -175,7 +173,7 @@ class DefaultType implements Type
     public function setDataFromObject(\oxBase $oxObject)
     {
         foreach ($this->getMapping() as $field => $source) {
-            $this->data[$field] = $oxObject->{$source}->getRawValue();
+            $this->fillElasticField($oxObject, $source, $field);
         }
     }
 
@@ -185,5 +183,29 @@ class DefaultType implements Type
     public function persist()
     {
         $this->connector->persist($this->index, $this->getType(), $this->data);
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     * @param $esField
+     * @param $oxField
+     * @param $value
+     */
+    protected function fillObjectField(\oxBase $oxObject, $esField, $oxField, $value)
+    {
+        if ($esField == 'id') {
+            $oxObject->setId($value);
+        }
+        $oxObject->{$oxField} = new \oxField($value, \oxField::T_RAW);
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     * @param $oxField
+     * @param $esField
+     */
+    protected function fillElasticField(\oxBase $oxObject, $oxField, $esField)
+    {
+        $this->data[$esField] = $oxObject->{$oxField}->getRawValue();
     }
 }
