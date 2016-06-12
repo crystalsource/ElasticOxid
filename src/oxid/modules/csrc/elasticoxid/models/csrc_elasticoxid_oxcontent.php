@@ -36,7 +36,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
             $elasticOxidContent = $this->getElasticOxidContent();
             return $elasticOxidContent->loadOne($this, $sLoadId);
         } catch (Exception $e) {
-            oxRegistry::getUtils()->writeToLog($e->getMessage(), 'elasticoxid.txt');
+            oxRegistry::getUtils()->writeToLog($e->getMessage() . PHP_EOL . PHP_EOL, 'elasticoxid.txt');
             return parent::loadByIdent($sLoadId);
         }
     }
