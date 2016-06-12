@@ -89,6 +89,9 @@ class DefaultType implements Type
 
         $objectFields = $elasticResponseArray['hits']['hits'][0]['_source'];
         foreach ($this->getMapping() as $field => $target) {
+            if ($field == 'id') {
+                $oxObject->setId($objectFields[$field]);
+            }
             $oxObject->{$target} = new \oxField($objectFields[$field]);
         }
         return $objectFields['id'];
