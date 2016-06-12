@@ -23,7 +23,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
             $this->setLanguage($iLanguage);
             return $this->esLoad($sOxid);
         }
-        return parent::loadByIdent($sLoadId);
+        return parent::loadByIdent($sOxid);
     }
 
     /**
@@ -37,7 +37,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
             return $elasticOxidContent->loadOne($this, $sLoadId);
         } catch (Exception $e) {
             oxRegistry::getUtils()->writeToLog($e->getMessage(), 'elasticoxid.txt');
-            return $this->loadByIdent($sLoadId);
+            return parent::loadByIdent($sLoadId);
         }
     }
 
