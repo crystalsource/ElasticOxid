@@ -181,6 +181,6 @@ class DefaultType implements Type
      */
     public function persist()
     {
-        $this->connector->persist($this->index, $this->type, $this->data);
+        $this->connector->persist($this->index, $this->getType(), $this->data);
     }
 }
