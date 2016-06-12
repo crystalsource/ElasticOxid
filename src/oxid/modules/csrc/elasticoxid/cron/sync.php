@@ -41,7 +41,7 @@ class elasticOxidSync
         $oxObject = \oxNew($oxClass);
 
         if ($service->isMultiLang()) {
-            foreach ($this->getLanguages() as $lang) {
+            foreach ($this->getLanguages()['params'] as $lang) {
                 if (!$lang['active']) {
                     continue;
                 }
