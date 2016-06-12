@@ -37,19 +37,23 @@ class elasticOxidSync
      */
     public function syncToElasticSearch($oxClass, $serviceClass)
     {
-        $service = \oxRegistry::get('elasticoxid')->get($serviceClass);
+        $service = \oxRegistry::get('elasticoxid')->loader()->get($serviceClass);
         $oxObject = \oxNew($oxClass);
 
-        var_dump($this->getLanguages());
+        if ($service->isMultiLang()) {
+            foreach ($this->getLanguages() as $lang) {
+                oxRegistry::getLang()->setBaseLanguage($lang);
+                $service->setLanguage($lang);
+                $oxObject->setLanguage($lang);
+                $this->printLine(" -> Expert Lang " . $lang);
 
-        $oxList = new \oxList();
-        $oxList->init($oxClass);
-        $oxList->selectString('SELECT * FROM ' . $oxObject->getViewName());
-        $this->printLine(" -> Export " . $oxList->count() . " objects of " . $oxClass);
-        foreach ($oxList as $oxData) {
-            $service->setDataFromObject($oxData);
-            $this->printLine(" --> Export " . $service->getId());
-            $service->persist();
+                $this->syncOxObject($oxClass, $oxObject, $service);
+            }
+        } else {
+            oxRegistry::getLang()->setBaseLanguage(0);
+            $service->setLanguage(0);
+            $oxObject->setLanguage(0);
+            $this->syncOxObject($oxClass, $oxObject, $service);
         }
     }
 
@@ -61,6 +65,7 @@ class elasticOxidSync
                 $activeSystems[$oxClass] = 'elasticoxid.oxid.object.' . strtolower($oxClass);
             }
         }
+        return $activeSystems;
     }
 
     /**
@@ -108,10 +113,29 @@ class elasticOxidSync
 
         return $aParams;
     }
+
+    /**
+     * @param $oxClass
+     * @param $oxObject
+     * @param $service
+     */
+    private function syncOxObject($oxClass, $oxObject, $service)
+    {
+        $oxList = new \oxList();
+        $oxList->init($oxClass);
+        $oxList->selectString('SELECT * FROM ' . $oxObject->getViewName());
+        $this->printLine(" -> Export " . $oxList->count() . " objects of " . $oxClass);
+        foreach ($oxList as $oxData) {
+            $service->setDataFromObject($oxData);
+            $this->printLine(" --> Export " . $service->getId());
+            $service->persist();
+        }
+    }
 }
 
 
 $sync = new elasticOxidSync();
+$sync->printLine("Start sync");
 $sync->exitIfNotInClientMode();
 
 foreach ($sync->getActiveSystems() as $oxClass => $service) {

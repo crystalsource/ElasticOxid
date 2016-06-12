@@ -159,6 +159,14 @@ class DefaultType implements Type
     }
 
     /**
+     * @return boolean
+     */
+    public function isMultiLang()
+    {
+        return $this->multiLang;
+    }
+
+    /**
      * @param \oxBase $oxObject
      */
     public function setDataFromObject(\oxBase $oxObject)

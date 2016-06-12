@@ -63,6 +63,11 @@ interface Type
     public function setDataFromObject(\oxBase $oxObject);
 
     public function getType();
+
+    /**
+     * @return bool
+     */
+    public function isMultiLang();
     
     public function persist();
 }
