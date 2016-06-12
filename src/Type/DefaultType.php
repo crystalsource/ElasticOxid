@@ -88,7 +88,7 @@ class DefaultType implements Type
      * @param array $match
      * @return bool
      */
-    public function loadOneFromMatch(\oxBase $oxObject, $lang = 0, $match = [])
+    public function loadOneFromMatch(\oxBase $oxObject, $match = [], $lang = 0)
     {
         $this->setLanguage($lang);
         $elasticResponse = $this->connector->match($this->index, $this->getType(), $match);

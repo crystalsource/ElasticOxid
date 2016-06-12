@@ -29,7 +29,7 @@ interface Type
      * @param array $match
      * @return mixed
      */
-    public function loadOneFromMatch(\oxBase $oxObject, $lang = 0, $match = []);
+    public function loadOneFromMatch(\oxBase $oxObject, $match = [], $lang = 0);
 
     /**
      * @param \oxList $oxList

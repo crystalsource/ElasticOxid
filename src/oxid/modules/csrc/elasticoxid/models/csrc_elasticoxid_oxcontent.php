@@ -17,24 +17,62 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
         return parent::loadByIdent($sLoadId);
     }
 
+    /**
+     * @param $iLanguage
+     * @param $sOxid
+     * @return mixed
+     */
     public function loadInLang($iLanguage, $sOxid)
     {
         if ($this->isActiveForContent()) {
             $this->setLanguage($iLanguage);
+            return $this->esLoad($sOxid, $iLanguage);
+        }
+        return parent::loadInLang($iLanguage, $sOxid);
+    }
+
+    /**
+     * @param $sOxid
+     * @return mixed
+     */
+    public function load($sOxid)
+    {
+        if ($this->isActiveForContent()) {
             return $this->esLoad($sOxid);
         }
-        return parent::loadByIdent($sOxid);
+        return parent::load($sOxid);
+    }
+
+    /**
+     * @param $sOxid
+     * @return mixed
+     */
+    public function esLoad($sOxid, $lang = null)
+    {
+        try {
+            if ($lang === null) {
+                $lang = oxRegistry::getLang()->getBaseLangugae();
+            }
+            $elasticOxidContent = $this->getElasticOxidContent();
+            return $elasticOxidContent->loadOne($this, $sOxid, $lang);
+        } catch (Exception $e) {
+            oxRegistry::getUtils()->writeToLog($e->getMessage() . PHP_EOL . PHP_EOL, 'elasticoxid.txt');
+            return parent::loadByIdent($sOxid);
+        }
     }
 
     /**
      * @param $sLoadId
      * @return mixed
      */
-    public function esLoadByIdent($sLoadId)
+    public function esLoadByIdent($sLoadId, $lang = null)
     {
         try {
+            if ($lang === null) {
+                $lang = oxRegistry::getLang()->getBaseLangugae();
+            }
             $elasticOxidContent = $this->getElasticOxidContent();
-            return $elasticOxidContent->loadOne($this, $sLoadId);
+            return $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
         } catch (Exception $e) {
             oxRegistry::getUtils()->writeToLog($e->getMessage() . PHP_EOL . PHP_EOL, 'elasticoxid.txt');
             return parent::loadByIdent($sLoadId);
