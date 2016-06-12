@@ -119,7 +119,7 @@ class Connector implements ConnectorInterface
         $query = [
             'query' => $customQuery
         ];
-        if (is_array($source)) {
+        if (!empty($source) && is_array($source)) {
             $query['source'] = $source;
         }
         if ($size !== null) {
