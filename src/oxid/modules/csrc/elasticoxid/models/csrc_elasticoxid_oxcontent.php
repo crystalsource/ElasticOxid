@@ -49,11 +49,14 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
      */
     public function esLoad($sOxid, $lang = null)
     {
+        startProfile('elasticoxid::' . __CLASS__ . '::esLoad');
         if ($lang === null) {
             $lang = oxRegistry::getLang()->getBaseLanguage();
         }
         $elasticOxidContent = $this->getElasticOxidContent();
-        return $elasticOxidContent->loadOne($this, $sOxid, $lang);
+        $result = $elasticOxidContent->loadOne($this, $sOxid, $lang);
+        stopProfile('elasticoxid::' . __CLASS__ . '::esLoad');
+        return $result;
     }
 
     /**
@@ -62,11 +65,14 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
      */
     public function esLoadByIdent($sLoadId, $lang = null)
     {
+        startProfile('elasticoxid::' . __CLASS__ . '::esLoadByIdent');
         if ($lang === null) {
             $lang = oxRegistry::getLang()->getBaseLanguage();
         }
         $elasticOxidContent = $this->getElasticOxidContent();
-        return $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
+        $result = $elasticOxidContent->loadOneFromMatch($this, [ "loadident" => $sLoadId ], $lang);
+        stopProfile('elasticoxid::' . __CLASS__ . '::esLoadByIdent');
+        return $result;
     }
 
     /**
