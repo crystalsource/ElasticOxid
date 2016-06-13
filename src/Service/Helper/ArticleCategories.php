@@ -58,8 +58,11 @@ class ArticleCategories implements TypeHelperInterface
      * @param int $language
      * @return string
      */
-    private function getCategoryListValue(array $catIds, $language = 0)
+    private function getCategoryListValue(array $catIds, $language = 0, $sign=null)
     {
+        if (is_null($sign)) {
+            $sign = $this->seperateSign;
+        }
         $dbConn = $this->getOxidDb();
         $value = $this->seperateSign;
         $langField = $language == 0 ? 'OXTITLE' : 'OXTITLE_' . $language;
@@ -71,9 +74,9 @@ class ArticleCategories implements TypeHelperInterface
                 ]
             );
             if ($categoryInfos['OXPARENTID'] && $categoryInfos['OXPARENTID'] != 'oxrootid') {
-                $value .= $this->getCategoryListValue([$categoryInfos['OXPARENTID']]) . $this->relationSign;
+                $value .= $this->getCategoryListValue([$categoryInfos['OXPARENTID']], $language, $this->relationSign);
             }
-            $value .= $categoryInfos[$langField] . $this->seperateSign;
+            $value .= $categoryInfos[$langField] . $sign;
         }
         return $value;
     }
