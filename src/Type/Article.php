@@ -78,7 +78,7 @@ class Article extends DefaultType
     {
         parent::fillElasticField($oxObject, $oxField, $esField);
         if ($esField == 'longdesc') {
-            $this->data[$esField] = $oxObject->getLongDescrption();
+            $this->data[$esField] = $oxObject->getLongDescription();
         }
     }
 }
