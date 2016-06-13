@@ -12,6 +12,7 @@ require_once realpath(dirname(__FILE__) . '/../../../../') . "/bootstrap.php";
 class elasticOxidSync
 {
     private $systems = [
+        'oxarticle' => 'bElasticOxidArticle',
         'oxcontent' => 'bElasticOxidContent'
     ];
 
