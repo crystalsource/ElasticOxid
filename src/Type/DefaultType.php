@@ -68,7 +68,7 @@ class DefaultType implements Type
      */
     public function getType()
     {
-        return $this->type . ($this->multiLang ? '_' . $this->language : '' );
+        return $this->type . ($this->multiLang ? '_' . $this->language : '');
     }
 
     /**
@@ -89,8 +89,13 @@ class DefaultType implements Type
 
         $objectFields = $elasticResponseArray['hits']['hits'][0]['_source'];
         foreach ($this->getMapping() as $field => $target) {
-            $value = $objectFields[$field];
-            $this->fillObjectField($oxObject, $field, $target, $value);
+            if (is_string($target)) {
+                $value = $objectFields[$field];
+                $this->fillObjectField($oxObject, $field, $target, $value);
+            }
+            elseif (is_array($target)) {
+                $this->fillObjectFieldFromCustomFunction($oxObject, $field, $target, $objectFields);
+            }
         }
         return $objectFields['id'];
     }
@@ -103,7 +108,7 @@ class DefaultType implements Type
      */
     public function loadOne(\oxBase $oxObject, $ident, $lang = 0)
     {
-        return $this->loadOneFromMatch($oxObject, [ 'id' => $ident ], $lang);
+        return $this->loadOneFromMatch($oxObject, ['id' => $ident], $lang);
     }
 
     /**
@@ -181,7 +186,12 @@ class DefaultType implements Type
     public function setDataFromObject(\oxBase $oxObject)
     {
         foreach ($this->getMapping() as $field => $source) {
-            $this->fillElasticField($oxObject, $source, $field);
+            if (is_string($source)) {
+                $this->fillElasticField($oxObject, $source, $field);
+            }
+            elseif (is_array($source)) {
+                $this->fillElasticFieldFromCustomFunction($oxObject, $source, $field);
+            }
         }
     }
 
@@ -207,6 +217,16 @@ class DefaultType implements Type
         $oxObject->{$oxField} = new \oxField($value, \oxField::T_RAW);
     }
 
+    protected function fillObjectFieldFromCustomFunction(
+        \oxBase $oxObject, $esField, array $oxField, array $esResponseData
+    ) {
+        if ($oxField['type'] == 'service') {
+            $serviceClass = $oxField['class'];
+            $service = $this->connector->get($serviceClass);
+            $service->fillObject($oxObject, $esField, $oxField, $esResponseData);
+        }
+    }
+
     /**
      * @param \oxBase $oxObject
      * @param $oxField
@@ -216,6 +236,20 @@ class DefaultType implements Type
     {
         if ($oxObject->{$oxField} instanceof \oxField) {
             $this->data[$esField] = $oxObject->{$oxField}->getRawValue();
+        }
+    }
+
+    /**
+     * @param \oxBase $oxObject
+     * @param array $source
+     * @param $field
+     */
+    protected function fillElasticFieldFromCustomFunction(\oxBase $oxObject, array $source, $field)
+    {
+        if ($source['type'] == 'service') {
+            $serviceClass = $source['class'];
+            $service = $this->connector->get($serviceClass);
+            $service->fillElastic($oxObject, $source, $field);
         }
     }
 }

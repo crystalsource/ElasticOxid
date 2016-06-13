@@ -7,3 +7,5 @@ services:
     elasticoxid.oxid.object.oxarticle:
         class: ElasticOxid\Type\Article
         arguments: ['@elasticoxid.connector']
+    elasticoxid.helper.oxarticle.categories:
+        class: ElasticOxid\Service\Helper\ArticleCategories

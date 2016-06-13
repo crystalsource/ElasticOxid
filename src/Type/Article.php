@@ -36,14 +36,18 @@ class Article extends DefaultType
      * @var array
      */
     protected $mapping = [
-        'id'        => 'oxarticles__oxid',
-        'shopid'    => 'oxarticles__oxshopid',
-        'parentid'  => 'oxarticles__oxparentid',
-        'active'    => 'oxarticles__oxactive',
-        'title'     => 'oxarticles__oxtitle',
-        'price'     => 'oxarticles__oxprice',
-        'shortdesc' => 'oxarticles__oxshortdesc',
-        'longdesc'  => 'oxarticles__oxlongdesc',
+        'id'         => 'oxarticles__oxid',
+        'shopid'     => 'oxarticles__oxshopid',
+        'parentid'   => 'oxarticles__oxparentid',
+        'active'     => 'oxarticles__oxactive',
+        'title'      => 'oxarticles__oxtitle',
+        'price'      => 'oxarticles__oxprice',
+        'shortdesc'  => 'oxarticles__oxshortdesc',
+        'longdesc'   => 'oxarticles__oxlongdesc',
+        'categories' => [
+            'type'    => 'service',
+            'class' => 'elasticoxid.helper.oxarticle.categories'
+        ]
     ];
 
     /**
@@ -65,7 +69,7 @@ class Article extends DefaultType
     {
         parent::fillObjectField($oxObject, $esField, $oxField, $value);
         if ($esField == 'longdesc') {
-            $oxObject->setLongDescription($value);
+            $oxObject->setArticleLongDesc($value);
         }
     }
 
@@ -78,7 +82,7 @@ class Article extends DefaultType
     {
         parent::fillElasticField($oxObject, $oxField, $esField);
         if ($esField == 'longdesc') {
-            $this->data[$esField] = $oxObject->getLongDescription();
+            $this->data[$esField] = $oxObject->getLongDescription()->getRawValue();
         }
     }
 }
