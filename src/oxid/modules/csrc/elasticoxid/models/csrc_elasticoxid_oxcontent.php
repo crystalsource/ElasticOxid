@@ -89,6 +89,7 @@ class csrc_elasticoxid_oxcontent extends csrc_elasticoxid_oxcontent_parent
     protected function getElasticOxidContent()
     {
         $elasticOxidContent = oxRegistry::get('elasticoxid')->loader()->get('elasticoxid.oxid.object.oxcontent');
+        $elasticOxidContent->setServiceLoader(oxRegistry::get('elasticoxid')->loader());
         return $elasticOxidContent;
     }
 }
