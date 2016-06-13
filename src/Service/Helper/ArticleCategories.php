@@ -21,6 +21,11 @@ class ArticleCategories implements TypeHelperInterface
     private $seperateSign = '|';
 
     /**
+     * @var string
+     */
+    private $relationSign = '->';
+
+    /**
      * @param \oxBase $oxObject
      * @param $esField
      * @param array $oxField
@@ -65,8 +70,8 @@ class ArticleCategories implements TypeHelperInterface
                     $catId
                 ]
             );
-            if (count($categoryInfos) > 0) {
-                $value .= $this->getCategoryListValue([$categoryInfos['oxparentid']]) . $this->seperateSign;
+            if ($categoryInfos['OXPARENTID'] && $categoryInfos['OXPARENTID'] != 'oxrootid') {
+                $value .= $this->getCategoryListValue([$categoryInfos['OXPARENTID']]) . $this->relationSign;
             }
             $value .= $categoryInfos[$langField] . $this->seperateSign;
         }
