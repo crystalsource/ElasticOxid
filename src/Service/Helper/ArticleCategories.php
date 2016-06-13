@@ -73,10 +73,14 @@ class ArticleCategories implements TypeHelperInterface
                     $catId
                 ]
             );
-            if ($categoryInfos['OXPARENTID'] && $categoryInfos['OXPARENTID'] != 'oxrootid') {
-                $value .= $this->getCategoryListValue([$categoryInfos['OXPARENTID']], $language, $this->relationSign);
+            if ($categoryInfos) {
+                if ($categoryInfos['OXPARENTID'] && $categoryInfos['OXPARENTID'] != 'oxrootid') {
+                    $value .= $this->getCategoryListValue(
+                        [$categoryInfos['OXPARENTID']], $language, $this->relationSign
+                    );
+                }
+                $value .= $categoryInfos[$langField] . $sign;
             }
-            $value .= $categoryInfos[$langField] . $sign;
         }
         return $value;
     }
