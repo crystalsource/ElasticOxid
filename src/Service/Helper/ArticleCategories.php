@@ -37,7 +37,7 @@ class ArticleCategories implements TypeHelperInterface
     {
         $dbConn = $this->getOxidDb();
         $catIds = $dbConn->getCol(
-            'SELECT oxcatnid FROM oxobject2categories WHERE oxobjectid = ?', array($oxObject->getId())
+            'SELECT oxcatnid FROM oxobject2category WHERE oxobjectid = ?', array($oxObject->getId())
         );
         var_dump($catIds);
     }
