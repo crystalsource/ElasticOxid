@@ -6,3 +6,4 @@ services:
         arguments: ['@elasticoxid.connector']
     elasticoxid.oxid.object.oxarticle:
         class: ElasticOxid\Type\Article
+        arguments: ['@elasticoxid.connector']
