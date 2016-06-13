@@ -244,7 +244,7 @@ class DefaultType implements Type
     ) {
         if ($oxField['type'] == 'service') {
             $service = $this->getHelper($oxField);
-            $service->fillObject($oxObject, $esField, $oxField, $esResponseData);
+            $service->fillObject($oxObject, $esField, $oxField, $esResponseData, $this->getLanguage());
         }
     }
 
@@ -269,7 +269,7 @@ class DefaultType implements Type
     {
         if ($source['type'] == 'service') {
             $service = $this->getHelper($source);
-            $service->fillElastic($oxObject, $source, $field);
+            $service->fillElastic($oxObject, $source, $field, $this->getLanguage());
         }
     }
 

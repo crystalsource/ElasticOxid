@@ -16,13 +16,18 @@ namespace ElasticOxid\Service\Helper;
 class ArticleCategories implements TypeHelperInterface
 {
     /**
+     * @var string
+     */
+    private $seperateSign = '|';
+
+    /**
      * @param \oxBase $oxObject
      * @param $esField
      * @param array $oxField
      * @param array $esResponseData
-     * @return mixed
+     * @param int $language
      */
-    public function fillObject(\oxBase $oxObject, $esField, array $oxField, array $esResponseData)
+    public function fillObject(\oxBase $oxObject, $esField, array $oxField, array $esResponseData, $language = 0)
     {
         // TODO: Implement fillObject() method.
     }
@@ -31,17 +36,44 @@ class ArticleCategories implements TypeHelperInterface
      * @param \oxBase $oxObject
      * @param array $source
      * @param $field
-     * @return mixed
+     * @param int $language
      */
-    public function fillElastic(\oxBase $oxObject, array $source, $field)
+    public function fillElastic(\oxBase $oxObject, array $source, $field, $language = 0)
     {
         $dbConn = $this->getOxidDb();
         $catIds = $dbConn->getCol(
             'SELECT oxcatnid FROM oxobject2category WHERE oxobjectid = ?', array($oxObject->getId())
         );
-        var_dump($catIds);
+        $categoryListValue = $this->getCategoryListValue($catIds, $language);
+        var_dump($categoryListValue);
     }
 
+    /**
+     * @param array $catIds
+     * @param int $language
+     * @return string
+     */
+    private function getCategoryListValue(array $catIds, $language = 0)
+    {
+        $dbConn = $this->getOxidDb();
+        $value = $this->seperateSign;
+        $langField = $language == 0 ? 'OXTITLE' : 'OXTITLE_' . $language;
+        foreach ($catIds as $catId) {
+            $categoryInfos = $dbConn->getRow(
+                'SELECT * FROM oxcategories WHERE oxid = ?',
+                [
+                    $catId
+                ]
+            );
+            $value .= $this->getCategoryListValue([ $categoryInfos['oxparentid'] ]) . $this->seperateSign;
+            $value .= $categoryInfos[$langField] . $this->seperateSign;
+        }
+        return $value;
+    }
+
+    /**
+     * @return \oxLagecyDb
+     */
     private function getOxidDb()
     {
         return \oxDb::getDb();
