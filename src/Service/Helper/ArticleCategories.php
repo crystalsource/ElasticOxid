@@ -65,7 +65,9 @@ class ArticleCategories implements TypeHelperInterface
                     $catId
                 ]
             );
-            $value .= $this->getCategoryListValue([ $categoryInfos['oxparentid'] ]) . $this->seperateSign;
+            if (count($categoryInfos) > 0) {
+                $value .= $this->getCategoryListValue([$categoryInfos['oxparentid']]) . $this->seperateSign;
+            }
             $value .= $categoryInfos[$langField] . $this->seperateSign;
         }
         return $value;

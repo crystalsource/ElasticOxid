@@ -265,11 +265,11 @@ class DefaultType implements Type
      * @param array $source
      * @param $field
      */
-    protected function fillElasticFieldFromCustomFunction(\oxBase $oxObject, array $source, $field)
+    protected function fillElasticFieldFromCustomFunction(\oxBase $oxObject, array $source, $esField)
     {
         if ($source['type'] == 'service') {
             $service = $this->getHelper($source);
-            $this->data[$esField] = $service->getElasticValue($oxObject, $source, $field, $this->getLanguage());
+            $this->data[$esField] = $service->getElasticValue($oxObject, $source, $esField, $this->getLanguage());
         }
     }
 
