@@ -83,7 +83,7 @@ class ArticleCategories implements TypeHelperInterface
      */
     private function getOxidDb()
     {
-        return \oxDb::getDb();
+        return \oxDb::getDb(\oxDb::FETCH_MODE_ASSOC);
     }
 
 
