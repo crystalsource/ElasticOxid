@@ -130,7 +130,7 @@ class elasticOxidSync
         $this->printLine(" -> Export " . $oxList->count() . " objects of " . $oxClass);
         foreach ($oxList as $oxData) {
             $service->setDataFromObject($oxData);
-            $this->printLine(" --> Export " . $service->getId());
+            $this->printLine(" --> Export " . $service->getId(), $oxClass);
             $service->persist();
         }
     }
