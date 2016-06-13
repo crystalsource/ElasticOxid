@@ -49,8 +49,7 @@ class ArticleCategories implements TypeHelperInterface
         $catIds = $dbConn->getCol(
             'SELECT oxcatnid FROM oxobject2category WHERE oxobjectid = ?', array($oxObject->getId())
         );
-        $categoryListValue = $this->getCategoryListValue($catIds, $language);
-        var_dump($categoryListValue);
+        return $this->seperateSign . $this->getCategoryListValue($catIds, $language);
     }
 
     /**
@@ -64,7 +63,7 @@ class ArticleCategories implements TypeHelperInterface
             $sign = $this->seperateSign;
         }
         $dbConn = $this->getOxidDb();
-        $value = $this->seperateSign;
+        $value = '';
         $langField = $language == 0 ? 'OXTITLE' : 'OXTITLE_' . $language;
         foreach ($catIds as $catId) {
             $categoryInfos = $dbConn->getRow(
