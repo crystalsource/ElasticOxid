@@ -38,7 +38,7 @@ class ArticleCategories implements TypeHelperInterface
      * @param $field
      * @param int $language
      */
-    public function fillElastic(\oxBase $oxObject, array $source, $field, $language = 0)
+    public function getElasticValue(\oxBase $oxObject, array $source, $field, $language = 0)
     {
         $dbConn = $this->getOxidDb();
         $catIds = $dbConn->getCol(

@@ -21,5 +21,5 @@ interface TypeHelperInterface
      * @param int $language
      * @return mixed
      */
-    public function fillElastic(\oxBase $oxObject, array $source, $field, $language = 0);
+    public function getElasticValue(\oxBase $oxObject, array $source, $field, $language = 0);
 }
