@@ -214,6 +214,8 @@ class DefaultType implements Type
      */
     protected function fillElasticField(\oxBase $oxObject, $oxField, $esField)
     {
-        $this->data[$esField] = $oxObject->{$oxField}->getRawValue();
+        if ($oxObject->{$oxObject} instanceof \oxField) {
+            $this->data[$esField] = $oxObject->{$oxField}->getRawValue();
+        }
     }
 }
