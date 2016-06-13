@@ -15,7 +15,7 @@ namespace ElasticOxid\Type;
 
 use ElasticOxid\Connector\Connector;
 
-class Content extends DefaultType
+class Article extends DefaultType
 {
     /**
      * @var string
