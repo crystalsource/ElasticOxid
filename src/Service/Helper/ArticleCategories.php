@@ -35,7 +35,16 @@ class ArticleCategories implements TypeHelperInterface
      */
     public function fillElastic(\oxBase $oxObject, array $source, $field)
     {
-        // TODO: Implement fillElastic() method.
+        $dbConn = $this->getOxidDb();
+        $catIds = $dbConn->getCol(
+            'SELECT oxcatnid FROM oxobject2categories WHERE oxobjectid = ?', array($oxObject->getId())
+        );
+        var_dump($catIds);
+    }
+
+    private function getOxidDb()
+    {
+        return \oxDb::getDb();
     }
 
 
