@@ -18,6 +18,7 @@ $aLang = array(
     'SHOP_MODULE_sElasticOxidRoundRobin' => 'Round Robin',
     'SHOP_MODULE_sElasticOxidLog'        => 'Log',
 
+    'SHOP_MODULE_bElasticOxidArticle' => 'Artikel',
     'SHOP_MODULE_bElasticOxidContent' => 'CMS-Seiten',
 
 );
