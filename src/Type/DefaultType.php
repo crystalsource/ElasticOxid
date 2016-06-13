@@ -14,6 +14,7 @@
 namespace ElasticOxid\Type;
 
 use ElasticOxid\Connector\Connector;
+use ElasticOxid\Service\Loader;
 
 class DefaultType implements Type
 {
@@ -54,6 +55,8 @@ class DefaultType implements Type
      * @var int
      */
     protected $language = 0;
+
+    protected $serviceLoader = null;
 
     /**
      * @return mixed
@@ -204,6 +207,25 @@ class DefaultType implements Type
     }
 
     /**
+     * @return null
+     */
+    public function getServiceLoader()
+    {
+        if ($this->serviceLoader === null) {
+            $this->serviceLoader = new Loader();
+        }
+        return $this->serviceLoader;
+    }
+
+    /**
+     * @param null $serviceLoader
+     */
+    public function setServiceLoader($serviceLoader)
+    {
+        $this->serviceLoader = $serviceLoader;
+    }
+
+    /**
      * @param \oxBase $oxObject
      * @param $esField
      * @param $oxField
@@ -221,8 +243,7 @@ class DefaultType implements Type
         \oxBase $oxObject, $esField, array $oxField, array $esResponseData
     ) {
         if ($oxField['type'] == 'service') {
-            $serviceClass = $oxField['class'];
-            $service = $this->connector->get($serviceClass);
+            $service = $this->getHelper($oxField);
             $service->fillObject($oxObject, $esField, $oxField, $esResponseData);
         }
     }
@@ -247,9 +268,19 @@ class DefaultType implements Type
     protected function fillElasticFieldFromCustomFunction(\oxBase $oxObject, array $source, $field)
     {
         if ($source['type'] == 'service') {
-            $serviceClass = $source['class'];
-            $service = $this->connector->get($serviceClass);
+            $service = $this->getHelper($source);
             $service->fillElastic($oxObject, $source, $field);
         }
+    }
+
+    /**
+     * @param array $oxField
+     * @return object
+     */
+    protected function getHelper(array $oxField)
+    {
+        $serviceClass = $oxField['class'];
+        $service = $this->getServiceLoader()->get($serviceClass);
+        return $service;
     }
 }
