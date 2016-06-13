@@ -20,12 +20,12 @@ class Content extends DefaultType
     /**
      * @var string
      */
-    protected $index = 'content';
+    protected $index = 'article';
 
     /**
      * @var string
      */
-    protected $type = 'oxcontent';
+    protected $type = 'oxarticle';
 
     /**
      * @var bool
@@ -63,7 +63,10 @@ class Content extends DefaultType
      */
     protected function fillObjectField(\oxBase $oxObject, $esField, $oxField, $value)
     {
-        parent::fillElasticField($oxObject, $esField, $oxField, $value);
+        parent::fillObjectField($oxObject, $esField, $oxField, $value);
+        if ($esField == 'longdesc') {
+            $oxObject->setLongDescription($value);
+        }
     }
 
     /**
@@ -73,6 +76,9 @@ class Content extends DefaultType
      */
     protected function fillElasticField(\oxBase $oxObject, $oxField, $esField)
     {
-        $this->data[$esField] = $oxObject->{$oxField}->getRawValue();
+        parent::fillElasticField($oxObject, $oxField, $esField);
+        if ($esField == 'longdesc') {
+            $this->data[$esField] = $oxObject->getLongDescrption();
+        }
     }
 }

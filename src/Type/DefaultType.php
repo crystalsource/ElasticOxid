@@ -128,6 +128,14 @@ class DefaultType implements Type
     }
 
     /**
+     * @param array $mapping
+     */
+    public function setMapping($mapping)
+    {
+        $this->mapping = $mapping;
+    }
+
+    /**
      * @return array
      */
     public function getData()
