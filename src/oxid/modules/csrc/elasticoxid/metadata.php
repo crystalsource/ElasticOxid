@@ -50,6 +50,7 @@ $aModule = array(
         array('group' => 'main', 'name' => 'sElasticOxidRoundRobin', 'type' => 'str', 'value' => ''),
         array('group' => 'main', 'name' => 'sElasticOxidLog', 'type' => 'str', 'value' => ''),
         array('group' => 'main', 'name' => 'sElasticOxidRetryOnConflict', 'type' => 'str', 'value' => ''),
+        array('group' => 'systems', 'name' => 'bElasticOxidArticle', 'type' => 'bool', 'value' => '1'),
         array('group' => 'systems', 'name' => 'bElasticOxidContent', 'type' => 'bool', 'value' => '1')
     ),
     'events' => array(),
