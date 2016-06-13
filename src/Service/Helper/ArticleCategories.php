@@ -73,7 +73,7 @@ class ArticleCategories implements TypeHelperInterface
                     $catId
                 ]
             );
-            if ($categoryInfos) {
+            if ($categoryInfos['OXID']) {
                 if ($categoryInfos['OXPARENTID'] && $categoryInfos['OXPARENTID'] != 'oxrootid') {
                     $value .= $this->getCategoryListValue(
                         [$categoryInfos['OXPARENTID']], $language, $this->relationSign
